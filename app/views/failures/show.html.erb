@@ -1,0 +1,64 @@
+<h1>View faulure</h1>
+
+<p id="notice"><%= notice %></p>
+<p>
+    <td><%= link_to 'Memorize it', fix_failure_path(@failure) %></td>
+</p>
+<p>
+  <b>Build:</b>
+  <%= @failure.build_id %>
+</p>
+
+
+<p>
+  <b>Test:</b>
+  <%= @failure.test %>
+</p>
+
+<p>
+  <b>Ptfnd url:</b>
+  <%= link_to @failure.ptfnd_url, @failure.ptfnd_url, :target => '_blank' %> 
+</p>
+
+<p>
+  <b>Exception msg:</b>
+  <%= @failure.exception_msg %>
+</p>
+
+<p>
+  <b>Stack trace:</b></br>
+  <%= @failure.stack_trace %>
+</p>
+
+<p>
+  <b>Is user visible:</b>
+  <%= @failure.is_user_visible %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @failure.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_failure_path(@failure) %> |
+<%= link_to 'Back', failures_path %>
+
+
+<h3>Linked resolution</h3>
+
+
+<div id="resolution">
+<% if @failure.resolution %>
+<%= render @failure.resolution %>
+<% else %>
+No linked resolution.&nbsp;
+<%= link_to 'Create new resolution for failure', new_resolution_path(:failure_id => @failure.id) %>
+
+<% end %>
+</div>
+
+<div id="resolution">
+<%= link_to 'List of matched resolutions for failure', matchlist_resolution_path(:failure_id => @failure.id) %>
+</div>
+

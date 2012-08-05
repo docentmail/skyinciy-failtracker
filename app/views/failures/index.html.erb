@@ -1,0 +1,39 @@
+<h1>Listing failures</h1>
+
+<table border="1">
+  <tr>
+    <th>Build</th>
+    <th>Resolution</th>
+    <th>Test</th>
+    <!-- <th>Ptfnd url</th> -->
+    <!--<th>Exception msg</th> -->
+    <!-- <th>Stack trace</th> -->
+    <th>Is user visible</th>
+    <th>Notes</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @failures.each do |failure| %>
+  <tr>
+    <td><%= failure.build_id %></td>
+    <td><%= failure.resolution_id %></td>
+    <td><%= failure.test %></td>
+<!--    
+    <td><%= failure.ptfnd_url %></td>
+    <td><%= failure.exception_msg %></td>
+    <td><%= failure.stack_trace %></td>
+-->    
+    <td><%= failure.is_user_visible %></td>
+    <td><%= failure.notes %></td>
+    <td><%= link_to 'Show', failure %></td>
+    <td><%= link_to 'Edit', edit_failure_path(failure) %></td>
+    <td><%= link_to 'Destroy', failure, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Failure', new_failure_path %>

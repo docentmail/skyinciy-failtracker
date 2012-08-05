@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fc19</title>
+  <!-- %= stylesheet_link_tag    "application", :media => "all" % -->
+  <%= stylesheet_link_tag :andreas09 %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="container">
+	<div id="sitename">
+		<h1>QAA failure snooper v0.5</h1>
+		<h2>Let's make automaited tests user-friendly!</h2>
+	</div>
+	<div id="mainmenu">
+		<ul>
+			<li><a href="/builds">Builds</a></li>  <!-- <a class="current"  -->
+			<li><a href="/failures">Failures</a></li>			
+			<li><a href="/resolutions">Resolutions</a></li>
+		</ul>
+	</div>
+	<div id="wrap">
+		<div id="rightside">
+			<h1>Fixed resources</h1>
+			<p>
+				<p>			
+					<% if !session[:build_id].nil? %>
+						<h3>Fixed build:</h3> 
+						<%= link_to 'Goto', build_path(session[:build_id]), {:class => 'nav'} %> 
+						<%= link_to 'Clean' , clean_build_path(session[:build_id]), {:class => 'nav'} %>
+					<% end %> 
+				</p>		
+				<p>			
+					<% if !session[:failure_id].nil? %>
+						<h2>Fixed failure:</h2> 
+						<%= link_to 'Goto', failure_path(session[:failure_id]), {:class => 'nav'}  %> 
+						<%= link_to 'Clean' , clean_failure_path(session[:failure_id]), {:class => 'nav'} %>
+					<% end %> 
+				</p>		
+				<p>			
+
+					<% if !session[:resolution_id].nil? %>
+						<h2>Fixed resolution:</h2> 
+						<%= link_to 'Goto', resolution_path(session[:resolution_id]), {:class => 'nav'} %> 
+						<%= link_to 'Clean' , clean_resolution_path(session[:resolution_id]), {:class => 'nav'} %>
+					<% end %> 
+				</p>		
+			</p>		
+
+
+		</div>
+
+
+
+
+		<div id="contentalt">
+			<%= yield %>
+		</div>
+		<div class="clearingdiv">&nbsp;</div>
+		</div>
+	</div>
+</div>
+
+	<div id="footer">
+		<p>&copy; 2012 <a href="#"></a> | Template design by <a href="http://andreasviklund.com/">Andreas Viklund</a></p>
+	</div>
+
+</body>
+</html>

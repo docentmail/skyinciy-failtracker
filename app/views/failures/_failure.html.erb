@@ -1,0 +1,20 @@
+<%= div_for failure do %>
+    <b> Test:</b>
+    <%= failure.test %> 
+
+    <% if !(failure.resolution).nil? %>
+        <b>&nbsp; &nbsp; Problem type: </b>
+        <%= (failure.resolution.problem_type).nil? ? "Unknown" : $problem_type.key(failure.resolution.problem_type) %> 
+        <b>&nbsp; &nbsp; Is resolved: </b>
+        <%= failure.resolution.is_resolved %>
+     <% else %>      
+     	&nbsp; &nbsp; No linked resolution 
+     <% end %>   
+
+
+
+    <span class='actions'>
+        <%= link_to 'Show', failure %>
+        <%= link_to 'Delete', [failure], :confirm => 'Are you sure?', :method => :delete %>
+    </span>
+<% end %>

@@ -1,0 +1,34 @@
+<h1>Listing builds</h1>
+
+<table border="1">
+  <tr>
+    <th>Launched at</th>
+    <th>Application</th>
+    <th>Environment</th>
+    <th>App release</th>
+    <th>Notes</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @builds.each do |build| %>
+  <tr>
+    <td><%= build.launched_at %></td>
+    <td><%= $appls.key(build.application) %></td>
+    <td><%= $environments.key(build.environment) %></td>
+    <td><%= $releases.key(build.app_release) %></td>
+    <td><%= build.notes %></td>
+    <td><%= link_to 'Show', build %></td>
+    <td><%= link_to 'Edit', edit_build_path(build) %></td>
+    <td><%= link_to 'Destroy', build, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Build', new_build_path %>
+
+
+

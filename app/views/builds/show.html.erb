@@ -1,0 +1,45 @@
+<h1>View build</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+    <td><%= link_to 'Memorize it', fix_build_path(@build) %></td>
+</p>
+
+<p>
+  <b>Launched at:</b>
+  <%= @build.launched_at %>
+</p>
+
+<p>
+  <b>Application:</b>
+  <%=  $appls.key(@build.application) %>
+</p>
+
+<p>
+  <b>Environment:</b>
+  <%= $environments.key(@build.environment) %>
+</p>
+
+<p>
+  <b>Release:</b>
+  <%= $releases.key(@build.app_release) %>
+</p>
+
+<p>
+  <b>Build url:</b>
+  <%= link_to @build.link_to_jenkins_build, @build.link_to_jenkins_build, :target => '_blank' %> 
+ </p>
+
+<p>
+  <b>Notes:</b>
+  <%= @build.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_build_path(@build) %> |
+<%= link_to 'Back', builds_path %>
+
+<h3>Failures</h3>
+<div id="failures">
+   <%= render @build.failures %>
+</div>

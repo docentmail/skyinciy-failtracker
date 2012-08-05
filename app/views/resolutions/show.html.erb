@@ -1,0 +1,62 @@
+<h1>View resolution</h1>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+    <td><%= link_to 'Memorize it', fix_resolution_path(@resolution) %></td>
+<br/>
+    <td><%= link_to 'link to memorized failure', linkto_resolution_path(@resolution) %></td>
+</p>
+
+
+
+<p>
+  <b>Application:</b>
+  <%=  $appls.key(@resolution.application) %>
+</p>
+
+
+<p>
+  <b>Test:</b>
+  <%= @resolution.test %>
+</p>
+
+  <p>
+    <b>Problem type:</b>
+    <%=  $problem_type.key(@resolution.problem_type) %>
+  </p>
+
+  <p>
+    <b>Jira url:</b>
+    <%= link_to @resolution.jira_url, @resolution.jira_url, :target => '_blank' %> 
+  </p>
+
+  <p>
+    <b>Is resolved:</b>
+    <%= @resolution.is_resolved %>
+  </p>
+
+<p>
+  <b>Exception msg ptrn:</b>
+  <%= @resolution.exception_msg_ptrn %>
+</p>
+
+<p>
+  <b>Stack trace ptrn:</b>
+  <%= @resolution.stack_trace_ptrn %>
+</p>
+
+<p>
+  <b>Problem type:</b>
+  <%= @resolution.problem_type %>
+</p>
+
+
+<p>
+  <b>Notes:</b>
+  <%= @resolution.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_resolution_path(@resolution) %> |
+<%= link_to 'Back', resolutions_path %>

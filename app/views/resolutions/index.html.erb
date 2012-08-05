@@ -1,0 +1,57 @@
+<h1>Listing resolutions</h1>
+
+    <% if (! @failure.nil?) %>
+        <div>
+            Matched resolution for failure with id= <%= @failure.id%>
+    
+        </div>    
+    <% end %>
+
+<table border="1">
+  <tr>
+    <th>Application</th>                          
+    <th>Test</th>
+<!--
+    <th>Exception msg ptrn</th>
+    <th>Stack trace ptrn</th>
+    <th>Jira url</th>
+-->
+    <th>Problem type</th>
+    <th>Is resolved</th>
+<!--    <th>Notes</th> -->
+    <th></th>
+    <th></th>
+    <th></th>
+    <% if (! @prcnt.nil?) %>
+    <th>%</th>
+    <% end %>
+  </tr>
+
+<% @resolutions.each do |resolution| %>
+  <tr>
+    <td><%= (resolution.application).nil? ? "Any" : $appls.key(resolution.application) %></td>
+
+    <td><%= resolution.test %></td>
+<!--
+    <td><%= resolution.exception_msg_ptrn %></td>
+    <td><%= resolution.stack_trace_ptrn %></td>
+    <td><%= resolution.jira_url %></td>
+-->
+    <td><%= (resolution.problem_type).nil? ? "?" : $problem_type.key(resolution.problem_type) %> </td>
+    <td><%= resolution.is_resolved %></td>
+<!--    <td><%= resolution.notes %></td> -->
+    <td><%= link_to 'Show', resolution %></td>
+    <td><%= link_to 'Edit', edit_resolution_path(resolution) %></td>
+    <td><%= link_to 'Destroy', resolution, confirm: 'Are you sure?', method: :delete %></td>
+
+    <% if (! @prcnt.nil?) %>
+        <td><%= @prcnt.has_key?(resolution.id) ? @prcnt.fetch(resolution.id) : "nil"  %></td>
+    <% end %>
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Resolution', new_resolution_path %>

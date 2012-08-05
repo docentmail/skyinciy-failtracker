@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  build_id: 1
+  resolution_id: 1
+  test: MyString
+  ptfnd_url: MyString
+  exception_msg: MyText
+  stack_trace: MyText
+  is_user_visible: false
+  notes: MyText
+
+two:
+  build_id: 1
+  resolution_id: 1
+  test: MyString
+  ptfnd_url: MyString
+  exception_msg: MyText
+  stack_trace: MyText
+  is_user_visible: false
+  notes: MyText

@@ -1,0 +1,58 @@
+<%= form_for(@resolution) do |f| %>
+  <% if @resolution.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@resolution.errors.count, "error") %> prohibited this resolution from being saved:</h2>
+
+      <ul>
+      <% @resolution.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :problem_type %><br />
+    <%= f.select(:problem_type, options_for_select($problem_type, @resolution.problem_type)) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :application %><br />
+    <%= f.select(:application, options_for_select($appls, @resolution.application)) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :test %><br />
+    <%= f.text_field :test, :size => "70" %>
+  </div>
+  <div class="field">
+    <%= f.label :exception_msg_ptrn %><br />
+    <%= f.text_area :exception_msg_ptrn, :size => "130x3" %>
+  </div>
+  <div class="field">
+    <%= f.label :stack_trace_ptrn %><br />
+    <%= f.text_area :stack_trace_ptrn , :size => "130x20" %>
+  </div>
+  <div class="field">
+    <%= f.label :jira_url %><br />
+    <%= f.text_field :jira_url, :size => "160" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :is_resolved %><br />
+    <%= f.check_box :is_resolved %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes, :size => "130x10"  %>
+  </div>
+
+  <% if @failure %>
+	  <%= hidden_field_tag('failureid', @failure.id) %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

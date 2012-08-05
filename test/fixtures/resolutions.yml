@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  application: 1
+  test: MyString
+  exception_msg_ptrn: MyString
+  stack_trace_ptrn: MyText
+  jira_url: MyString
+  problem_type: 1
+  is_resolved: false
+  notes: MyText
+
+two:
+  application: 1
+  test: MyString
+  exception_msg_ptrn: MyString
+  stack_trace_ptrn: MyText
+  jira_url: MyString
+  problem_type: 1
+  is_resolved: false
+  notes: MyText
