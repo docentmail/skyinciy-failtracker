@@ -14,6 +14,9 @@ Fc19::Application.routes.draw do
   match  '/resolutions/linkto/:id', :controller => 'resolutions', :action => 'linkto', :as => :linkto_resolution, :via => [:get]
   match  '/resolutions/matchlist', :controller => 'resolutions', :action => 'matchlist', :as => :matchlist_resolution, :via => [:get]
 
+  match  '/recentbuilds/showlist', :controller => 'recentbuilds', :action => 'showlist', :as => :recentbuilds_showlist, :via => [:get]
+  match  '/recentbuilds/loadbuild', :controller => 'recentbuilds', :action => 'loadbuild', :as => :recentbuilds_loadbuild, :via => [:get]
+
 
 
   resources :failures
@@ -21,6 +24,7 @@ Fc19::Application.routes.draw do
   resources :resolutions
 
   resources :builds
+  resources :recentbuilds
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

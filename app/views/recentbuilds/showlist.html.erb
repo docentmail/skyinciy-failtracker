@@ -1,0 +1,27 @@
+<h1>Show list of the actual builds </h1>
+buildname =<%= @buildname %>
+
+<table border="1">
+  <tr>
+    <th>Build name</th>
+    <th>Build date</th>
+    <th>is loaded/load</th>
+  </tr>
+
+<% @recentbuilds.each do |build| %>
+  <tr>
+    <td><%= build["name"] %></td>
+    <td><%= build["date"] %></td>
+    <td> 
+      <% if build["loaded"]  %>
+        already loaded
+      <% else %> 
+        <%= link_to 'load build', recentbuilds_loadbuild_path(:name => build["name"] , :date => build["date"] ) %>  
+      <% end %>        
+    </td>
+  </tr>
+<% end %>
+</table>
+
+
+

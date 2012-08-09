@@ -89,9 +89,9 @@ class ResolutionsController < ApplicationController
     @resolution = Resolution.new(params[:resolution])
 
     Resolution.transaction do
-	    saveokay=@resolution.save
+	    saveokay=@resolution.save!
 	    @failure.resolution_id=@resolution.id  #  linkagefailure in resolution
-	    @failure.save
+	    @failure.save!
 	    #raise ActiveRecord::Rollback
 	    update_msg='Resolution was successfully created and linked to the Failure.'
     end

@@ -1,0 +1,15 @@
+<h1>Check recent builds</h1>
+<p id="notice"><%= @notice %></p>
+
+<%= form_tag( recentbuilds_showlist_path, :method => "get") do %>
+  <div class="field">
+    <%= "Build name: " %>
+    <%= text_field "recentbuild", "name", "size" => 20 %>
+  </div>
+  <%= submit_tag "Check recent builds" %>
+
+<% end %>
+
+
+
+

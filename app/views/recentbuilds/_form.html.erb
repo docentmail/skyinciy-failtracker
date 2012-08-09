@@ -1,0 +1,62 @@
+<%= form_for(@build) do |f| %>
+  <% if @build.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@build.errors.count, "error") %> prohibited this build from being saved:</h2>
+
+      <ul>
+      <% @build.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :launched_at %><br />
+    <%= f.datetime_select :launched_at %>
+  </div>
+<!--
+  <div class="field">
+    <%= f.label :application %><br />
+    <%= f.text_field :application %>
+  </div>
+-->
+  <div class="field">
+    <%= f.label :application %><br />
+    <%= f.select(:application, options_for_select($appls, @build.application)) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :environment %><br />
+    <%= f.select(:environment, options_for_select($environments, @build.environment)) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :jenkins_build_name %><br />
+    <%= f.text_field :jenkins_build_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :app_release %><br />
+    <%= f.select(:app_release, options_for_select($releases, @build.app_release)) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :bag_build %><br />
+    <%= f.text_field :bag_build %>
+  </div>
+
+  <div class="field">
+    <%= f.label :link_to_jenkins_build %><br />
+    <%= f.text_field :link_to_jenkins_build %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+
+<% end %>
