@@ -8,6 +8,7 @@ gem 'rails', '3.2.5'
 gem 'activerecord-jdbcsqlite3-adapter'
 
 gem 'jruby-openssl'
+gem 'nokogiri'
 
 # Gems used only for assets and not required
 # in production environments by default.

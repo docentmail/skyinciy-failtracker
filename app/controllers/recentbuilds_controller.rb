@@ -37,9 +37,9 @@ class RecentbuildsController < ApplicationController
   # GET /recentbuilds/loadbuild.json
   def loadbuild
     @buildname =params[:name]
-    @builddate =params[:date]
+    @builddate =ApplicationHelper.datetime_from_request(params[:date])
     puts "@buildname" + @buildname
-    puts "@builddate" +@builddate
+    puts "@builddate" +@builddate.to_s
 
     # add build laading logic here
     @build = RecentbuildsHelper.get_recentbuild( @buildname, @builddate )

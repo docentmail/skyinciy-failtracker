@@ -11,12 +11,12 @@ buildname =<%= @buildname %>
 <% @recentbuilds.each do |build| %>
   <tr>
     <td><%= build["name"] %></td>
-    <td><%= build["date"] %></td>
+    <td><%= build["date"].strftime('%Y-%m-%d_%H-%M-%S') %></td>
     <td> 
       <% if build["loaded"]  %>
         already loaded
       <% else %> 
-        <%= link_to 'load build', recentbuilds_loadbuild_path(:name => build["name"] , :date => build["date"] ) %>  
+        <%= link_to 'load build', recentbuilds_loadbuild_path(:name => build["name"] , :date => ApplicationHelper.datetime_to_request(build["date"]) ) %>          
       <% end %>        
     </td>
   </tr>

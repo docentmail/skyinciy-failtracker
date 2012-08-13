@@ -3,16 +3,9 @@ module MockBuildSystemConnectorHelper
 
 	def self.get_recentbuilds_list_ext(par_buildname)
 	    recentbuilds = Array.new
-	    recentbuilds << {"name" => par_buildname , "date" => "2012-04-26_04-43-29"}
-	    recentbuilds << {"name" => par_buildname , "date" => "2012-04-26_15-23-28"}
+	    recentbuilds << {"name" => par_buildname , "date" => theDateTime=DateTime.strptime("2012-04-26_04-43-29", '%Y-%m-%d_%H-%M-%S')}
+	    recentbuilds << {"name" => par_buildname , "date" => theDateTime=DateTime.strptime("2012-04-26_15-23-28", '%Y-%m-%d_%H-%M-%S')}
 	    return recentbuilds
-	end
-
-	def self.set_loaded_for_recentbulds_list_ext(par_recentbuilds)
-	 	for recentbuild in par_recentbuilds
-	 		recentbuild["loaded"]=false
-	 	end   
-	 	return par_recentbuilds
 	end
 
 	def self.get_recentbuild_self( buildname, builddate )
