@@ -1,0 +1,10 @@
+<% if failures.nil? %>
+ no linked failures 
+<% else %>
+	<% failures.each do |failure| %>
+	<%= link_to "#{failure.test}", :controller => "failures", :action => "show", :id => failure.id %> , 
+	<%= link_to "Build", :controller => "builds", :action => "show", :id => failure.build_id %>
+	 <br/>
+	<% end %>
+<% end %>
+

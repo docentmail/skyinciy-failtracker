@@ -1,0 +1,11 @@
+<%= div_for resolution do %>
+  <h3>
+    <%= resolution.id %> - <%= resolution.test %>
+	<%= link_to 'Show', resolution %>
+      <spa class='actions'>
+
+        <%= link_to 'Delete', [resolution], :confirm => 'Are you sure?', :method => :delete %>
+      </span>
+
+  </h3>
+<% end %>

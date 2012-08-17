@@ -5,6 +5,8 @@ Fc19::Application.routes.draw do
 
   match  '/builds/fix/:id', :controller => 'builds', :action => 'fix', :as => :fix_build, :via => [:get]
   match  '/builds/clean/:id', :controller => 'builds', :action => 'clean', :as => :clean_build, :via => [:get]
+  match  '/builds/linkresolutions/:id', :controller => 'builds', :action => 'linkresolutions', :as => :linkresolutions_build, :via => [:get]
+  
 
   match  '/failures/fix/:id', :controller => 'failures', :action => 'fix', :as => :fix_failure, :via => [:get]
   match  '/failures/clean/:id', :controller => 'failures', :action => 'clean', :as => :clean_failure, :via => [:get]

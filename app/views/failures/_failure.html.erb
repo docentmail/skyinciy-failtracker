@@ -1,20 +1,66 @@
+<!--  http://jquerytools.org/demos/tooltip/any-html.html -->
+
+    <% if (defined? @failure_num).nil?
+        @failure_num=0 
+       end 
+    %>    
+
 <%= div_for failure do %>
-    <b> Test:</b>
-    <%= failure.test %> 
+    <% @failure_num=@failure_num+1 %>
+    <%= @failure_num%>&nbsp;
+    <!-- ================== failure ================================ -->
+        <b  id="failure_<%= @failure_num %>"> Test:</b>
+        <%= failure.test %> 
+         <span class='actions'>
+           <%= link_to 'Show', failure %>
+            <%= link_to 'Delete', [failure], :confirm => 'Are you sure?', :method => :delete %>
+        </span>
 
-    <% if !(failure.resolution).nil? %>
-        <b>&nbsp; &nbsp; Problem type: </b>
-        <%= (failure.resolution.problem_type).nil? ? "Unknown" : $problem_type.key(failure.resolution.problem_type) %> 
-        <b>&nbsp; &nbsp; Is resolved: </b>
-        <%= failure.resolution.is_resolved %>
-     <% else %>      
-     	&nbsp; &nbsp; No linked resolution 
-     <% end %>   
+        <div class="tooltip"  id="tooltip_failure<%= @failure_num %>">
+            Failure <%= @failure_num%>:
+            <%= link_to 'Show', failure %>&nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to 'Edit', edit_failure_path(failure) %>&nbsp;&nbsp;&nbsp;&nbsp; 
+            <%= link_to 'Edit', edit_failure_path(failure) %>&nbsp;&nbsp;&nbsp;&nbsp; 
+            <% if ApplicationHelper.string_has_value(failure.ptfnd_url) %>
+                <%= link_to 'PathFinder', failure.ptfnd_url, :target => '_blank' %>&nbsp;&nbsp;&nbsp;&nbsp; 
+            <% else %>
+                 No pathfinder link&nbsp;&nbsp;&nbsp;&nbsp;    
+            <%end %>    
+
+            <% if !failure.resolution %>
+                <%= link_to 'Create new resolution for failure', new_resolution_path(:failure_id => failure.id) %>&nbsp;&nbsp;&nbsp;&nbsp;
+            <% end %>
+            <%= link_to 'List of matched resolutions for failure', matchlist_resolution_path(:failure_id => failure.id) %>&nbsp;&nbsp;&nbsp;
+            &nbsp;
+            <%= link_to "Build", :controller => "builds", :action => "show", :id => failure.build_id %>
+
+            <br/><br/>
+            <span class="label">  Exception msg: </span><span class="text"><%= failure.exception_msg%></span>
+            <br/><br/>
+            <span  class="label">Stack trace:</span><span class="text">
+                    <% arr= ApplicationHelper.get_first_n_lines_as_array(failure.stack_trace, 5) 
+                       arr.each do|line| %> <%= line %><br/><%  end %>
+            </span>
+        </div>
 
 
+        <script type="text/javascript">
+                 $("#failure_<%= @failure_num %>").tooltip(
+                    { effect: 'slide',
+                    tip: '#tooltip_failure<%= @failure_num %>',
+                    opacity: 1,
+                    position: 'top right'
+                    //,delay: 2
+                    }
+                );
+        </script>
+        <!-- ================== resolution ================================ -->
+        <%= render :partial => 'resolutions/resolution',  :locals => { :resolution => failure.resolution } %>
 
-    <span class='actions'>
-        <%= link_to 'Show', failure %>
-        <%= link_to 'Delete', [failure], :confirm => 'Are you sure?', :method => :delete %>
-    </span>
+
+ 
+
 <% end %>
+
+
+

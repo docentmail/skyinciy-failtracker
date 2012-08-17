@@ -1,11 +1,64 @@
-<%= div_for resolution do %>
-  <h3>
-    <%= resolution.id %> - <%= resolution.test %>
-	<%= link_to 'Show', resolution %>
-      <spa class='actions'>
+    <% if (defined? @failure_num).nil?
+        @failure_num=0 
+       end 
+    %>    
 
-        <%= link_to 'Delete', [resolution], :confirm => 'Are you sure?', :method => :delete %>
-      </span>
+    <% resolution_num =Random.rand(10000000000) %>
+    
+    <% if !(resolution).nil? %>
+        <b  id="resolution_<%= resolution_num %>"> Resolution:</b>
+        <b>&nbsp; &nbsp; Id: </b>
+        <%= resolution.id %> 
 
-  </h3>
-<% end %>
+        <b>&nbsp; &nbsp; Problem type: </b>
+        <%= (resolution.problem_type).nil? ? "Unknown" : $problem_type.key(resolution.problem_type) %> 
+        <b>&nbsp; &nbsp; Is resolved: </b>
+        <%= resolution.is_resolved %>
+
+        <div class="tooltip"  id="tooltip_resolution<%= resolution_num %>">
+            Resolution id=<%= resolution.id %>:
+            <%= link_to 'Show', resolution %>   <%= link_to 'Edit', edit_resolution_path(resolution) %> 
+            <% if ApplicationHelper.string_has_value(resolution.jira_url) %>
+                <%= link_to 'JiraUrl', resolution.jira_url, :target => '_blank' %> 
+            <% else %>
+             no linked Jira    
+            <%end %>    
+
+            <br/><br/>
+            <span class="label">notes:</span><span class="text">
+                    <% arr= ApplicationHelper.get_first_n_lines_as_array(resolution.notes, 5) 
+                       arr.each do|line| %> <%= line %><br/><%  end %>
+            </span>
+
+            <br/>
+            <span  class="label">Stack trace:</span><span class="text">
+                    <% arr= ApplicationHelper.get_first_n_lines_as_array(resolution.stack_trace_ptrn, 5) 
+                       arr.each do|line| %> <%= line %><br/><%  end %>
+            </span>
+            <br/>
+            <span class="label">Exception msg:</span><span class="text"><%= resolution.exception_msg_ptrn%></span>
+
+        </div>
+
+
+        <script type="text/javascript">
+                 $("#resolution_<%= resolution_num %>").tooltip(
+                    { effect: 'slide',
+                    tip: '#tooltip_resolution<%= resolution_num %>',
+                    opacity: 1,
+                    position: 'top center'
+                    //,delay: 2
+                    }
+                );
+        </script>
+
+
+     <% else %>      
+        <b> Resolution:</b>
+     	&nbsp; &nbsp; No linked resolution 
+     <% end %>   
+
+
+
+
+

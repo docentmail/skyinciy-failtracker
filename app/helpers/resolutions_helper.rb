@@ -3,10 +3,28 @@ module ResolutionsHelper
 
 
 
+def self.replace_nelines_with_spase(par_src_str)
+  if par_src_str.nil? 
+    return nil
+  else
+    
+    src_str = par_src_str.clone
+    #puts "\n\n=======src_str before="+src_str+"#"
+    src_str.strip! # remove \n\r at the end and from the beginning
+    src_str.gsub!(/\r/,'') # invisible char - so just remove it
+    src_str.gsub!(/\n/,' ') # replace new line with " "
+    # puts "\n\n========src_str after="+src_str+"#"
+    return src_str
+  end 
+end  
 
 def self.compare_stacktaces(par_st_failure, par_st_resolution)
   st_failure=par_st_failure.nil? ? nil : par_st_failure.clone
   st_resolution=par_st_resolution.nil? ? nil : par_st_resolution.clone
+  # replace new lines and /r
+  st_failure = replace_nelines_with_spase(st_failure)
+  st_resolution = replace_nelines_with_spase(st_resolution)
+
    if  st_failure.nil? || st_failure.strip.empty?
      puts "--exit_1"
      return 0
@@ -27,14 +45,17 @@ def self.compare_stacktaces(par_st_failure, par_st_resolution)
    st_resolution.gsub! /\./ ,"\\\\."
    st_resolution.gsub! /\(/ ,"\\\\("
    st_resolution.gsub! /\)/ ,"\\\\)"
+   st_resolution.gsub! /\[/ ,"\\\\["
+   st_resolution.gsub! /\]/ ,"\\\\]"
    st_resolution.gsub! /\$/ ,"\\\\$"
+   st_resolution.gsub! /\*/ ,"\\\\*"   
    # replace @@@ with .*
    st_resolution.gsub! /@@@/ , ".*"
    
    #st_resolution=".*com\\..*"
    puts "st_resolution="+st_resolution
 
-  if /#{st_resolution}/ =~ st_failure
+  if  st_failure =~ /^#{st_resolution}$/ 
     puts "--exit_4"
        return 100
   end
@@ -46,7 +67,7 @@ def self.compare_stacktaces(par_st_failure, par_st_resolution)
       puts "st_resolution="+st_resolution
    puts "st_failure="+st_failure
 
-  if /#{st_resolution}/ =~ st_failure
+  if st_failure =~ /^#{st_resolution}$/ 
     puts "--exit_5"
     return 80
   end
@@ -62,6 +83,11 @@ def self.compare_stacktaces(par_st_failure, par_st_resolution)
 def self.compare_err_messages(par_msg_failure, par_msg_resolution)
   msg_failure=par_msg_failure.nil? ? nil : par_msg_failure.clone
   msg_resolution=par_msg_resolution.nil? ? nil : par_msg_resolution.clone
+  # replace new lines and /r
+  msg_failure = replace_nelines_with_spase(msg_failure)
+  msg_resolution = replace_nelines_with_spase(msg_resolution)
+
+
   # puts "compare_err_messages"
   # puts " msg_failure="+ msg_failure
   # puts " msg_resolution="+ msg_resolution
@@ -85,14 +111,17 @@ def self.compare_err_messages(par_msg_failure, par_msg_resolution)
    msg_resolution.gsub! /\./ ,"\\\\."
    msg_resolution.gsub! /\(/ ,"\\\\("
    msg_resolution.gsub! /\)/ ,"\\\\)"
+   msg_resolution.gsub! /\[/ ,"\\\\["
+   msg_resolution.gsub! /\]/ ,"\\\\]"
    msg_resolution.gsub! /\$/ ,"\\\\$"
+   msg_resolution.gsub! /\*/ ,"\\\\*"
    # replace @@@ with .*
    msg_resolution.gsub! /@@@/ , ".*"
 
    #st_resolution=".*com\\..*"
    puts "st_resolution="+msg_resolution
 
-  if /#{msg_resolution}/ =~ msg_failure
+  if msg_failure =~ /^#{msg_resolution}$/ 
     puts "--exit_4"
     return 100
   end

@@ -14,6 +14,7 @@ module ApplicationHelper
 	# http://qam:8080/details/spin.qa.auto.trunk_test/builds/2012-06-13_09-36-41/PthFndr/AssignMoreThanOneManfuacturerToAUserTest.testUsers005CreateAndEditManufacturer.100046823/
 
 
+	###### DateTime formatinng  #####################################
 	def self.datetime_for_db_search(par_datetime)
 	    par_datetime.strftime('%Y-%m-%d %H:%M:%S.%6N')
 	end	
@@ -27,7 +28,7 @@ module ApplicationHelper
 	end
 
 
-	# XML procedures
+	###### XML procedures  #####################################
 	def self.create_doc(xml_file_content)
 		require 'nokogiri'
 		doc = Nokogiri::XML(xml_file_content)
@@ -43,6 +44,45 @@ module ApplicationHelper
 			end
 			return rez
 	end
+
+	###### string converting  #####################################
+	def self.string_has_value(string_content)
+  			return !string_content.nil?  && !string_content.strip.empty?
+	end	
+
+
+	def self.get_first_n_lines_as_array(string_content, required_line_count)
+		if !string_has_value(string_content) 
+			return Array.new
+		end
+			
+		strArr= string_content.split("\n")[0..required_line_count-1]
+		if string_content.split("\n").length()>required_line_count 
+			strArr << "..."
+		end	
+
+		return strArr
+
+		
+
+	end	
+
+
+	def self.get_first_n_lines_as_line(string_content, required_line_count)
+		strArr=get_first_n_lines_as_array(string_content, required_line_count)
+		if (strArr.nil?)
+			return nil
+		end
+			
+
+	    strArr.each do |line|
+			line = line.strip+"\n"
+	    end	
+		strArr.last.strip!
+
+		return strArr.join
+
+	end	
 
 
 end

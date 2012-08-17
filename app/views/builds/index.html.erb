@@ -14,7 +14,7 @@
 
 <% @builds.each do |build| %>
   <tr>
-    <td><%= build.launched_at %></td>
+    <td><%= ApplicationHelper.datetime_to_request(build.launched_at) %></td>
     <td><%= $appls.key(build.application) %></td>
     <td><%= $environments.key(build.environment) %></td>
     <td><%= $releases.key(build.app_release) %></td>

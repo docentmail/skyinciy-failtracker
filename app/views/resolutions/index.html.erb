@@ -3,7 +3,43 @@
     <% if (! @failure.nil?) %>
         <div>
             Matched resolution for failure with id= <%= @failure.id%>
-    
+
+        <p>
+          <b>Build:</b>
+        	<%= link_to "Build id=#{@failure.build_id}", :controller => "builds", :action => "show", :id => @failure.build_id %>  
+          </p>
+
+
+        <p>
+          <b>Test:</b>
+          <%= @failure.test %>
+        </p>
+
+        <p>
+          <b>Ptfnd url:</b>
+          <%= link_to @failure.ptfnd_url, @failure.ptfnd_url, :target => '_blank' %> 
+        </p>
+
+        <p>
+          <b>Exception msg:</b>
+          <%= @failure.exception_msg %>
+        </p>
+
+        <p>
+          <b>Stack trace:</b></br>
+          <%= @failure.stack_trace %>
+        </p>
+
+        <p>
+          <b>Is user visible:</b>
+          <%= @failure.is_user_visible %>
+        </p>
+
+        <p>
+          <b>Notes:</b>
+          <%= @failure.notes %>
+        </p>
+
         </div>    
     <% end %>
 
@@ -16,8 +52,7 @@
     <th>Stack trace ptrn</th>
     <th>Jira url</th>
 -->
-    <th>Problem type</th>
-    <th>Is resolved</th>
+    <th>Problem type and Is resolved</th>
 <!--    <th>Notes</th> -->
     <th></th>
     <th></th>
@@ -37,8 +72,8 @@
     <td><%= resolution.stack_trace_ptrn %></td>
     <td><%= resolution.jira_url %></td>
 -->
-    <td><%= (resolution.problem_type).nil? ? "?" : $problem_type.key(resolution.problem_type) %> </td>
-    <td><%= resolution.is_resolved %></td>
+    <td> --------------------- <%= render :partial => 'resolutions/resolution',  :locals => { :resolution => resolution } %>
+    </td>
 <!--    <td><%= resolution.notes %></td> -->
     <td><%= link_to 'Show', resolution %></td>
     <td><%= link_to 'Edit', edit_resolution_path(resolution) %></td>

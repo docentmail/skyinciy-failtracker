@@ -83,6 +83,73 @@ class BuildsController < ApplicationController
   end
 
 
+  # GET /builds/1/linkresolutions
+  def linkresolutions
+    #puts "================================== Start linkresolutions"
+
+    @build = Build.find(params[:id])
+
+
+    # get all failures
+    failures = @build.failures
+    count_new_linked_failures=0
+
+    # puts "---------------------!failures.nil?"+(!failures.nil?).to_s
+    # puts "---------------------failures.length.to_s"+failures.length.to_s
+    # puts "---------------------!(failures.length>0)"+(!(failures.length>0)).to_s
+    
+    if !failures.nil? && failures.length>0
+
+      failures.each do |failure|  # failures loop 
+        # skip allready linked to resolution
+        if !failure.resolution.nil?
+          # puts "------- next !failure.resolution.nil?"
+          next
+        end
+        
+
+        # get matched 100% resolutions
+        resolutions = Resolution.all
+        resolutions_selected=Array.new
+
+        prcnt= Hash.new 
+        # puts "------- start resolutions.each{|r|"
+        resolutions.each{|r| 
+            cur_prc=    ResolutionsHelper.compare_failure_resolution(
+            (failure.build.application).nil? ? "Any" : $appls.key(failure.build.application), 
+            failure.test, 
+            failure.exception_msg, 
+            failure.stack_trace,
+            (r.application).nil? ? "Any" : $appls.key(r.application), 
+            r.test, 
+            r.exception_msg_ptrn, 
+            r.stack_trace_ptrn)
+            
+            if (cur_prc==100) 
+              prcnt.store(r.id, cur_prc)
+              resolutions_selected.push(r)
+            end  
+        }
+        # check that it exactly 1
+        # puts "------- final resolutions_selected.length="+resolutions_selected.length.to_s
+        if resolutions_selected.length==1 
+          # link resolution to failure
+          failure.resolution=resolutions_selected[0]
+          failure.save!
+          # link - add +1 in msg
+          count_new_linked_failures+=1
+        end  
+      end # failures loop 
+    end 
+ 
+    respond_to do |format|
+        format.html { redirect_to @build, notice: 'Linked '+count_new_linked_failures.to_s+' additional resolution to failure' }
+        format.json { head :no_content }
+    end
+
+  end
+
+
   # GET /builds/1/fix
   def fix
     @build = Build.find(params[:id])

@@ -6,8 +6,8 @@
 </p>
 <p>
   <b>Build:</b>
-  <%= @failure.build_id %>
-</p>
+	<%= link_to "Build id=#{@failure.build_id}", :controller => "builds", :action => "show", :id => @failure.build_id %>  
+  </p>
 
 
 <p>
@@ -50,6 +50,8 @@
 
 <div id="resolution">
 <% if @failure.resolution %>
+---------------------------------------------------------------------------------------------
+
 <%= render @failure.resolution %>
 <% else %>
 No linked resolution.&nbsp;

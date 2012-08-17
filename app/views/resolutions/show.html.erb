@@ -46,11 +46,6 @@
   <%= @resolution.stack_trace_ptrn %>
 </p>
 
-<p>
-  <b>Problem type:</b>
-  <%= @resolution.problem_type %>
-</p>
-
 
 <p>
   <b>Notes:</b>
@@ -60,3 +55,9 @@
 
 <%= link_to 'Edit', edit_resolution_path(@resolution) %> |
 <%= link_to 'Back', resolutions_path %>
+
+<h3>Failures linked to this resolution</h3>
+<div id="failures">
+<!--   <%= render :partial => 'failures/failureforresolution',  :locals => { :failures => @resolution.failures } %> -->
+   <%= render @resolution.failures %>
+</div>
